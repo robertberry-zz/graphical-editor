@@ -31,6 +31,12 @@ Draw a vertical segment of colour C in column X between Y1 and Y2 (inclusive).
 Draw a horizontal segment of colour C in row Y between columns X1 and X2
  (inclusive).
 
+### F X Y C
+
+Fill the region of which X, Y forms a point with colour C. The region is
+defined as the pixel at X, Y and any pixels of the initial colour of X, Y who
+are adjacent to the initial pixels or other pixels in the set.
+
 ### S
 
 Show the contents of the image.

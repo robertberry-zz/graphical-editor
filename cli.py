@@ -7,7 +7,10 @@ import re
 from image import Image, BadCoordinateError
 from utils import number_args
 
+# Maximum height of an image
 MAX_IMAGE_HEIGHT = 250
+
+# Maximum width of an image
 MAX_IMAGE_WIDTH = 250
 
 class CLIError(Exception):
@@ -15,19 +18,16 @@ class CLIError(Exception):
     """
     pass
 
-class UserCLIError(CLIError):
-    """User-supplied CLI error message.
+class NewImageError(CLIError):
+    """Error raised when user enters bad dimensions for new image.
     """
     def __init__(self, message):
         self.message = message
 
     def cli_message(self):
+        """Message the error prints on the command line.
+        """
         return self.message
-
-class NewImageError(UserCLIError):
-    """Error raised when user enters bad dimensions for new image.
-    """
-    pass
 
 class UnknownCommandError(CLIError):
     """Error thrown when user enters an unknown command.
@@ -36,6 +36,8 @@ class UnknownCommandError(CLIError):
         self.command = command
     
     def cli_message(self):
+        """Message the error prints on the command line.
+        """
         return "Unknown command: %s" % self.command
 
 class BadNumberArgsError(CLIError):
@@ -47,6 +49,8 @@ class BadNumberArgsError(CLIError):
         self.args_required = args_required
 
     def cli_message(self):
+        """Message the error prints on the command line.
+        """
         return "Command %s requires %d args, not %d" % (self.command, \
                                                             self.args_supplied, \
                                                             self.args_required)
@@ -59,6 +63,8 @@ class NoImageError(CLIError):
         self.command = command
     
     def cli_message(self):
+        """Message the error prints on the command line.
+        """
         return "%s can only be invoked after creating an image." % self.command
 
 class CLI(object):
@@ -111,10 +117,14 @@ class CLI(object):
             raise BadNumberArgsError(name, len(args), number_args(command) - 1)
 
     def terminate(self):
+        """Terminate the CLI process.
+        """
         self._running = False
         self._image = None
 
     def main_loop(self):
+        """Starts the CLI input loop.
+        """
         self._running = True
 
         while self._running:

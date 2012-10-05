@@ -27,23 +27,31 @@ class Image(object):
         self.height = height
         self.data = make_grid(width, height, INITIAL_COLOUR)
 
-    def set(self, x, y, value):
+    def set(self, x, y, colour):
+        """Sets the pixel at the given x, y co-ordinate to the given colour.
+        """
         try:
-            self.data[x - 1][y - 1] = value
+            self.data[x - 1][y - 1] = colour
         except IndexError:
             raise BadCoordinateError(self, x, y)
 
     def get(self, x, y):
+        """Returns the colour of the pixel at the given x, y co-ordinate.
+        """
         try:
             return self.data[x - 1][y - 1]
         except IndexError:
             raise BadCoordinateError(self, x, y)
 
     def clear(self):
+        """Sets all of the pixels in the image to the initial colour.
+        """
         for x, y in box(1, 1, self.width, self.height):
             self.set(x, y, INITIAL_COLOUR)
 
     def __repr__(self):
+        """String representation of the image.
+        """
         grid_str = ""
         for y in range(1, self.height):
             for x in range(1, self.width):
@@ -52,6 +60,8 @@ class Image(object):
         return grid_str
 
 def box(x_1, y_1, x_n, y_n):
+    """All co-ordinates for x_1 <= x <= x_n, y_1 <= y <= y_n.
+    """
     return ((x, y) for y in range(y_1, y_n) \
                 for x in range(x_1, x_n))
 
